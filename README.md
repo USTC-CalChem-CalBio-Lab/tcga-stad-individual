@@ -1,9 +1,11 @@
-#依赖环境安装：
+###依赖环境安装：
 
-A MHCnuggets
+##A MHCnuggets
+
 	pip(3/3.5/3.6/3.7) install MHCnuggets
 
-B ensembl-vep
+##B ensembl-vep
+
 	需安装依赖软件
 
 	B1 mysql
@@ -35,11 +37,13 @@ B ensembl-vep
 			curl ftp://ftp.ensembl.org/pub/release-94/variation/VEP/homo_sapiens_vep_94_GRCh38.tar.gz
 			tar zxvf homo_sapiens_vep_94_GRCh38.tar.gz
 
-C pvactools
+##C pvactools
+
 	pip(3/3.5/3.6/3.7) install pvactools
 
-D samtools (maf2vcf会用到)
-	依赖软件
+##D samtools (maf2vcf会用到)
+	
+	先安装依赖软件
 
 	D1 autoheader
 		sudo apt-get install autoheader
@@ -63,12 +67,12 @@ D samtools (maf2vcf会用到)
 	
 
 
-#整体运行流程
+###整体运行流程
 
-STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据 *.maf
+##STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  *.maf
 
 	A1.	搜索指定癌症类型的突变注释格式文件(Mutation Annotation Format, MAF)
-		18种癌症癌症类型数据来自 *add1*
+		18种癌症癌症类型数据来自 https://portal.gdc.cancer.gov/
 	
 	A2.	运行gdc_scan.py脚本，其中注意：
 			
@@ -78,12 +82,12 @@ STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据 *.maf
 	A3.	运行结束后得到压缩包，选择其中 TCGA.STAD.mutect.*.maf 进行解压
 		即 tar zxvf TCGA.STAD.mutect.*.maf
 	A4.	移动该maf文件至创建的工作目录中，并重命名为mutect.maf
-	A5.	mutect.maf文件的前五行需要删除，在该工作目录下运行：
-
-			sed -i '1,5d' mutect.maf
-
-
-	A6.	add1	https://portal.gdc.cancer.gov/
+	A5.	mutect.maf文件的前五行需要删除，同时由于染色体表示方式与fasta文件不符，需要删除各条目对应的”chr“,故共有两步操作:
+			sed -i '1,5d' mutect.maf //删去前5行
+			vim mutect.maf 	//打开文件
+			:%s/chr//g 		//正则匹配chr并替换为空字符串
+			Enter 			//执行
+			:wq				//保存
 
 
 
