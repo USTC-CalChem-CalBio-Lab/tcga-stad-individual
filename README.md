@@ -1,11 +1,11 @@
 ###依赖环境安装：
-
+---
 ##A MHCnuggets
-
+---
 	pip(3/3.5/3.6/3.7) install MHCnuggets
 
 ##B ensembl-vep
-
+---
 	需安装依赖软件
 
 	B1 mysql
@@ -38,11 +38,11 @@
 			tar zxvf homo_sapiens_vep_94_GRCh38.tar.gz
 
 ##C pvactools
-
+---
 	pip(3/3.5/3.6/3.7) install pvactools
 
 ##D samtools (maf2vcf会用到)
-	
+---	
 	先安装依赖软件
 
 	D1 autoheader
@@ -68,9 +68,9 @@
 
 
 ###整体运行流程
-
+---
 ##STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  *.maf
-
+---
 	A1.	搜索指定癌症类型的突变注释格式文件(Mutation Annotation Format, MAF)
 		18种癌症癌症类型数据来自 https://portal.gdc.cancer.gov/
 	
@@ -92,8 +92,8 @@
 
 
 
-
-
+##STEP②:利用爬虫从网站爬取胃癌四种分型数据
+---
 
 
 
