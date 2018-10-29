@@ -8,38 +8,101 @@ Created on Tue Sep 11 11:53:24 2018
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import csv
+import re
 
-cin = pd.read_csv("../bar/cin.csv")
-ebv = pd.read_csv("../bar/ebv.csv")
-gs = pd.read_csv("../bar/gs.csv")
-msi = pd.read_csv("../bar/msi.csv")
+cin = pd.read_csv("../bar-tmp/cin.csv")
+ebv = pd.read_csv("../bar-tmp/ebv.csv")
+gs = pd.read_csv("../bar-tmp/gs.csv")
+msi = pd.read_csv("../bar-tmp/msi.csv")
 #print(bar["HLA"]) 
 name_list = cin["HLA"]
-cin_list = cin["Amounts"]
-ebv_list = ebv["Amounts"]
-gs_list = gs["Amounts"]
-msi_list = msi["Amounts"]
+cin_list = cin["Avg_Amount"]
+ebv_list = ebv["Avg_Amount"]
+gs_list = gs["Avg_Amount"]
+msi_list = msi["Avg_Amount"]
 
-'''
-plt.bar(name_list,cin_list,label = "cin",fc='r')
-plt.legend()
-plt.savefig("../bar-cin.png",dpi = 2560)
+
+cin_csv = open("../bar/cin.csv",'r')
+reader = csv.DictReader(cin_csv)
+cin_class_list = [row['HLA'] for row in reader]
+
+gs_csv = open("../bar/gs.csv",'r')
+reader = csv.DictReader(gs_csv)
+gs_class_list = [row['HLA'] for row in reader]
+
+ebv_csv = open("../bar/ebv.csv",'r')
+reader = csv.DictReader(ebv_csv)
+ebv_class_list = [row['HLA'] for row in reader]
+
+msi_csv = open("../bar/msi.csv",'r')
+reader = csv.DictReader(msi_csv)
+msi_class_list = [row['HLA'] for row in reader]
+
+for i in range(len(cin_class_list)):
+    if (re.match("HLA-A[0-9][0-9]:[0-9][0-9]",cin_class_list[i])):
+        color = '#0000ff'
+        plt.bar(name_list[i],cin_list[i],label = "CIN",fc=color)
+    elif (re.match("HLA-B[0-9][0-9]:[0-9][0-9]",cin_class_list[i])):
+        color = '#00ff00'
+        plt.bar(name_list[i],cin_list[i],label = "CIN",fc=color)
+    elif (re.match("HLA-C[0-9][0-9]:[0-9][0-9]",cin_class_list[i])):
+        color = '#ffa500'
+        plt.bar(name_list[i],cin_list[i],label = "CIN",fc=color)        
+
+plt.ylabel("Number of Neoantigens Per Patient")
+plt.xticks=([])
+plt.gca().set_xticks([])
+plt.savefig("../bar-cin-avg.png",dpi = 2560)
 plt.show()
-'''
-'''
-plt.bar(name_list,ebv_list,label = "ebv")
-plt.legend()
-plt.savefig("../bar-ebv.png",dpi = 2560,fc='y')
+
+for i in range(len(ebv_class_list)):
+    if (re.match("HLA-A[0-9][0-9]:[0-9][0-9]",ebv_class_list[i])):
+        color = '#0000ff'
+        plt.bar(name_list[i],ebv_list[i],label = "EBV",fc=color)
+    elif (re.match("HLA-B[0-9][0-9]:[0-9][0-9]",ebv_class_list[i])):
+        color = '#00ff00'
+        plt.bar(name_list[i],ebv_list[i],label = "EBV",fc=color)
+    elif (re.match("HLA-C[0-9][0-9]:[0-9][0-9]",ebv_class_list[i])):
+        color = '#ffa500'
+        plt.bar(name_list[i],ebv_list[i],label = "EBV",fc=color)        
+
+plt.ylabel("Number of Neoantigens Per Patient")
+plt.xticks=([])
+plt.gca().set_xticks([])
+plt.savefig("../bar-ebv-avg.png",dpi = 2560)
 plt.show()
-'''
 
-plt.bar(name_list,gs_list,label = "gs",fc='g')
-plt.legend()
-plt.savefig("../bar-gs.png",dpi = 2560)
+for i in range(len(gs_class_list)):
+    if (re.match("HLA-A[0-9][0-9]:[0-9][0-9]",gs_class_list[i])):
+        color = '#0000ff'
+        plt.bar(name_list[i],gs_list[i],label = "GS",fc=color)
+    elif (re.match("HLA-B[0-9][0-9]:[0-9][0-9]",gs_class_list[i])):
+        color = '#00ff00'
+        plt.bar(name_list[i],gs_list[i],label = "GS",fc=color)
+    elif (re.match("HLA-C[0-9][0-9]:[0-9][0-9]",gs_class_list[i])):
+        color = '#ffa500'
+        plt.bar(name_list[i],gs_list[i],label = "GS",fc=color)        
+
+plt.ylabel("Number of Neoantigens Per Patient")
+plt.xticks=([])
+plt.gca().set_xticks([])
+plt.savefig("../bar-gs-avg.png",dpi = 2560)
 plt.show()
 
+for i in range(len(msi_class_list)):
+    if (re.match("HLA-A[0-9][0-9]:[0-9][0-9]",msi_class_list[i])):
+        color = '#0000ff'
+        plt.bar(name_list[i],msi_list[i],label = "MSI",fc=color)
+    elif (re.match("HLA-B[0-9][0-9]:[0-9][0-9]",msi_class_list[i])):
+        color = '#00ff00'
+        plt.bar(name_list[i],msi_list[i],label = "MSI",fc=color)
+    elif (re.match("HLA-C[0-9][0-9]:[0-9][0-9]",msi_class_list[i])):
+        color = '#ffa500'
+        plt.bar(name_list[i],msi_list[i],label = "MSI",fc=color)        
 
-plt.bar(name_list,msi_list,label = "msi",fc = '#ffff00',width = 0.5)
-plt.legend()
-plt.savefig("../bar-msi.png",dpi = 2560)
+plt.ylabel("Number of Neoantigens Per Patient")
+plt.xticks=([])
+plt.gca().set_xticks([])
+plt.savefig("../bar-msi-avg.png",dpi = 2560)
 plt.show()

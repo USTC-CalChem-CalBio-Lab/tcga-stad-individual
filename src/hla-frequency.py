@@ -9,18 +9,37 @@ Created on Tue Oct  9 10:03:24 2018
 import matplotlib.pyplot as plt
 import pandas as pd
 import csv
+import re
 
-hla = pd.read_csv("../dataset/HLA-all.csv")
+
+def draw(input_csv,output_png):
+    
+    hla = pd.read_csv(input_csv)
 #print(hla)
-tmp = open("../dataset/HLA-all.csv",'r')
-reader = csv.DictReader(tmp)
-class_list = [row['Class'] for row in reader]
-name_list = hla["Type"]
-hla_list = hla["Frequency"]
-print(class_list)
-plt.legend()
-for i in range(len(class_list)):
+    tmp = open(input_csv,'r')
+    reader = csv.DictReader(tmp)
+    class_list = [row['HLA'] for row in reader]
+    name_list = hla["HLA"]
+    hla_list = hla["Frequency"]
+    for i in range(len(class_list)):
+        if (re.match("HLA-A[0-9][0-9]:[0-9][0-9]",class_list[i])):
+            color = '#0000ff'        
+            plt.bar(name_list[i],hla_list[i], fc = color,width = 0.5)
+        elif (re.match("HLA-B[0-9][0-9]:[0-9][0-9]",class_list[i])):
+            color = '#00ff00'        
+            plt.bar(name_list[i],hla_list[i], fc = color,width = 0.5)
+        elif (re.match("HLA-C[0-9][0-9]:[0-9][0-9]",class_list[i])):
+            color = '#ffa500'        
+            plt.bar(name_list[i],hla_list[i], fc = color,width = 0.5)
     plt.gca().invert_yaxis()
-    plt.bar(name_list[i],hla_list[i], fc = class_list[i],width = 0.5)
-plt.savefig("../hla-frequency.png",dpi = 2560)
-plt.show()
+    plt.ylabel("Allele Frequency")
+    plt.xlabel("Allele")
+    plt.xticks=([])
+    plt.gca().set_xticks([])
+    plt.savefig(output_png,dpi = 2560)
+    plt.show()
+    
+draw("../../cin-hla-frequency.csv","../cin-hla-frequency.png")
+draw("../../gs-hla-frequency.csv","../gs-hla-frequency.png")
+draw("../../ebv-hla-frequency.csv","../ebv-hla-frequency.png")
+draw("../../msi-hla-frequency.csv","../msi-hla-frequency.png")

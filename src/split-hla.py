@@ -6,6 +6,7 @@ Created on Tue Sep 11 12:19:49 2018
 @author: frank-lsy
 """
 import re
+import sh
 
 
 def extract(input_file,source_arr,output_dir):
@@ -34,7 +35,8 @@ def extract(input_file,source_arr,output_dir):
     
     
 input_file = "../hla.csv"
-output_dir = "../bar/"
+output_dir = "../bar-tmp/"
+sh.mkdir(output_dir)
 facets = ["cin","ebv","gs","msi"]
 
 extract(input_file,facets,output_dir)
