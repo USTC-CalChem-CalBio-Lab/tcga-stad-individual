@@ -1,5 +1,5 @@
 依赖环境安装：
----
+===
 A MHCnuggets
 ---
 	pip(3/3.5/3.6/3.7) install MHCnuggets
@@ -20,7 +20,7 @@ B ensembl-vep
 	
 	B3 DBD::mysql
 		cpan (install) DBD
-		ps:安装过程中提示缺什么就直接cpan (install) 什么 ~~
+		ps:安装过程中提示缺什么就直接cpan (install) *库名称*
 
 	安装完成依赖软件之后安装ensembl-vep
 	git clone https://github.com/Ensembl/ensembl-vep.git
@@ -68,21 +68,21 @@ D samtools (maf2vcf会用到)
 
 
 整体运行流程
----
+===
 STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  *.maf
 ---
-	A1.	搜索指定癌症类型的突变注释格式文件(Mutation Annotation Format, MAF)
-		18种癌症癌症类型数据来自 [gdc-portal]: https://portal.gdc.cancer.gov/
+	1.	搜索指定癌症类型的突变注释格式文件(Mutation Annotation Format, MAF)
+		18种癌症癌症类型数据来自 [gdc-portal](https://portal.gdc.cancer.gov/)
 	
-	A2.	运行gdc_scan.py脚本，其中注意：
+	2.	运行gdc_scan.py脚本，其中注意：
 			
-			A21. 第9行应改为：URL_BASE="https://api.gdc.cancer.gov/"
-			A22. 第10行应改为：LEGACY_BASE="https://api.gdc.cancer.gov/legacy/"
+			2.1. 第9行应改为：URL_BASE="https://api.gdc.cancer.gov/"
+			2.2. 第10行应改为：LEGACY_BASE="https://api.gdc.cancer.gov/legacy/"
 
-	A3.	运行结束后得到压缩包，选择其中 TCGA.STAD.mutect.*.maf 进行解压
+	3.	运行结束后得到压缩包，选择其中 TCGA.STAD.mutect.*.maf 进行解压
 		即 tar zxvf TCGA.STAD.mutect.*.maf
-	A4.	移动该maf文件至创建的工作目录中，并重命名为mutect.maf
-	A5.	mutect.maf文件的前五行需要删除，同时由于染色体表示方式与fasta文件不符，需要删除各条目对应的”chr“,故共有两步操作:
+	4.	移动该maf文件至创建的工作目录中，并重命名为mutect.maf
+	5.	mutect.maf文件的前五行需要删除，同时由于染色体表示方式与fasta文件不符，需要删除各条目对应的”chr“,故共有两步操作:
 			sed -i '1,5d' mutect.maf //删去前5行
 			vim mutect.maf 	//打开文件
 			:%s/chr//g 		//正则匹配chr并替换为空字符串
@@ -94,7 +94,14 @@ STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  *.maf
 
 STEP②:利用爬虫从网站爬取胃癌四种分型数据
 ---
+	1.运行tcga-stad.py
+		即 python(3/3.5/3.6/3.7) tcga-stad.py
+		ps:
+			1.提示缺少什么python库直接 pip(3/3.5/3.6/3.7) install *库名称*
+			2.利用模拟网页访问的方式进行数据爬取，故需提前安装chromedriver(谷歌浏览器)或geckodriver(火狐浏览器)，直接网页下载即可，windows环境下放在tcga-stad.py当前文件夹，linux环境放在/usr/bin/目录下。
+				pps:可能会提示driver无法运行类似错误，尝试更新电脑本身浏览器至最新再重试。
 
+	2.
 
 
 
