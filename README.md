@@ -72,8 +72,7 @@ D samtools (maf2vcf会用到)
 
 整体运行流程
 ===
-
-STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  *.maf
+STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  TCGA.[type].[predict-method].maf
 ---
 	1.	搜索指定癌症类型的突变注释格式文件(Mutation Annotation Format, MAF)
 		18种癌症癌症类型数据来自 [gdc-portal](https://portal.gdc.cancer.gov/)
@@ -135,6 +134,10 @@ STEP⑤:利用ensembl-vep进行注释
 	直接调用vep.sh脚本进行文件批量注释。
 	输入:../vcf/type-vcf/sample.vcf (vcf/cin-vcf/TCGA-BR-4183.vcf)
 	输出:../vep-vcf/type-vep/sample.vcf (vep-vcf/cin-vep/TCGA-BR-4183.vcf)
+
+	需要将注释后的vep中normal数据删掉
+
+STEP⑥:
 
 
 
