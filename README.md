@@ -29,7 +29,8 @@ B ensembl-vep
 	perl INSTALL.pl
 	
 	ps:	安装时候基本一路选择yes，记得要安装plugins。
-		不需要安装fasta，如果根目录剩余空间够大(>10G)可以安装cache，否则手动下载cache。
+		不需要安装fasta，如果根目录剩余空间够大(>10G)可以安装cache，否则手动下载cache。		
+		***安装所有的Plugins!!!*** (即选择0:all)
 		手动下载cache方法：
 			在ensembl-vep下
 			mkdir cache
@@ -40,6 +41,8 @@ B ensembl-vep
 C pvactools
 ---
 	pip(3/3.5/3.6/3.7) install pvactools
+	下载完成后，找到pvactools文件夹并打开， cd tools/pvacseq/VEP_lugins. 会看到一个Wildtype.pm 将其复制到/root/.vep/Plugins文件夹中。
+		ps:pvactools文件夹通常在python3的默认安装文件夹中。
 
 D samtools (maf2vcf会用到)
 ---	
@@ -69,6 +72,7 @@ D samtools (maf2vcf会用到)
 
 整体运行流程
 ===
+
 STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  *.maf
 ---
 	1.	搜索指定癌症类型的突变注释格式文件(Mutation Annotation Format, MAF)
@@ -92,18 +96,45 @@ STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  *.maf
 
 
 
-STEP②:利用爬虫从网站爬取胃癌四种分型数据
+STEP②:利用爬虫从[网站](http://compbio-research.cs.brown.edu/public/stad/#!/)爬取胃癌四种分型分别包含的患者ID
 ---
 	1.运行tcga-stad.py
 		即 python(3/3.5/3.6/3.7) tcga-stad.py
+		会新建tcga-stad文件夹，产生1(cin)/2(ebv)/3(gs)/4(msi).csv四个文件。
 		ps:
 			1.提示缺少什么python库直接 pip(3/3.5/3.6/3.7) install *库名称*
 			2.利用模拟网页访问的方式进行数据爬取，故需提前安装chromedriver(谷歌浏览器)或geckodriver(火狐浏览器)，直接网页下载即可，windows环境下放在tcga-stad.py当前文件夹，linux环境放在/usr/bin/目录下。
 				pps:可能会提示driver无法运行类似错误，尝试更新电脑本身浏览器至最新再重试。
 
-	2.
+	2.爬取数据会出现大量重复，调用duplicate.py进行去重
+		即 python(3/3.5/3.6/3.7) duplicate.py
+		会在tcga-stad中新建new文件夹，产生1-new/2-new/3-new/4-new.csv四个文件。为最终结果。
 
+	最终得到抽取好的各分型对应患者ID。
+	输出:../tcga-stad/new/type.csv(tcga-stad/new/cin.csv)
 
+STEP③:从maf文件提取各ID对应的maf文件
+---
+	将从网页上提取的四组不同类型的胃癌从maf文件中分离。
+	输入:mutect.maf
+	输出:../data/type/sample.maf (data/cin/TCGA-BR-4183.maf)
+
+STEP④:利用maf2vcf进行文件格式转换
+---
+	使用vcf2maf中的maf2vcf工具将MAF文件转换为VCF文件
+	谷歌搜索[Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz]并下载解压到 ./dataset
+	maf2vcf.pl脚本中第12行的 Homo_sapiens.GRCh*.fa.gz 路径更新为 ../dataset/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz
+	maf2vcf.pl脚本第105行，splice( @regions, 0, 50000 ),其中50000可根据电脑情况更改，一般Cent0S和Ubuntu不用改。
+
+	调用脚本2vcf.sh进行文件批量文件格式转换
+	输入：../data/type/sample.maf (data/cin/TCGA-BR-4183.maf)
+	输出：../vcf/type-vcf/sample.vcf (vcf/cin-vcf/TCGA-BR-4183.vcf)
+
+STEP⑤:利用ensembl-vep进行注释
+---
+	直接调用vep.sh脚本进行文件批量注释。
+	输入:../vcf/type-vcf/sample.vcf (vcf/cin-vcf/TCGA-BR-4183.vcf)
+	输出:../vep-vcf/type-vep/sample.vcf (vep-vcf/cin-vep/TCGA-BR-4183.vcf)
 
 
 
