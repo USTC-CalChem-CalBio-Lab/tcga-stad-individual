@@ -134,11 +134,21 @@ STEP⑤:利用ensembl-vep进行注释
 	直接调用vep.sh脚本进行文件批量注释。
 	输入:../vcf/type-vcf/sample.vcf (vcf/cin-vcf/TCGA-BR-4183.vcf)
 	输出:../vep-vcf/type-vep/sample.vcf (vep-vcf/cin-vep/TCGA-BR-4183.vcf)
-
-	需要将注释后的vep中normal数据删掉
+	
+	注释命令
+		./vep -i <input-vcf> -o <output-vcf> \
+		--format vcf --vcf --symbol --terms SO --tsl \
+		--hgvs --fasta <reference build fasta file location> \
+		--cache --dir_cache <VEP cache directory> \
+		--plugin Downstream --plugin Wildtype \
+		[--dir_plugins <VEP_plugins directory>] --pick [--transcript_version] \
+		--no_stats [--fork num]
+	
+	需要将注释后的vep中normal数据删掉，调用cut.py脚本
 
 STEP⑥:
-
+---
+	
 
 
 
