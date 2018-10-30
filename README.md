@@ -78,7 +78,7 @@ STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  TCGA.[type].[pr
 		18种癌症癌症类型数据来自 [gdc-portal](https://portal.gdc.cancer.gov/)
 	
 	2.	运行gdc_scan.py脚本，其中注意：
-			
+			python gdc_scan.py files download --format MAF --project TCGA-XXXX
 			2.1. 第9行应改为：URL_BASE="https://api.gdc.cancer.gov/"
 			2.2. 第10行应改为：LEGACY_BASE="https://api.gdc.cancer.gov/legacy/"
 
