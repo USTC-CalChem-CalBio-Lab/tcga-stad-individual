@@ -162,7 +162,8 @@ STEP⑥:利用filter_vep.pl脚本过滤vcf文件
 		-filter "Feature != ENST00000589042"
 
 
-运行pVACseq得到fasta文件
+STEP⑦：运行pVACseq得到fasta文件
+---
 	
 	移除正常样本数据并过滤之后的vcf文件与pVACseq兼容，运行pVACseq得到相应长度的多肽链
 	
@@ -173,8 +174,8 @@ STEP⑥:利用filter_vep.pl脚本过滤vcf文件
 		pvacseq generate_protein_fasta [-h] [-d DOWNSTREAM_SEQUENCE_LENGTH]
 						<input_file> <peptide_sequence_length>
 						<output_file>
-运行pep.sh脚本抽取偶数行多肽
-
+STEP⑧：运行pep.sh脚本抽取偶数行多肽
+---
 	对于得到的fasta文件，我们只需要偶数行的多肽
 	
 	输入：../RP/to/fasta_file/sample.fa ()
@@ -184,14 +185,14 @@ STEP⑥:利用filter_vep.pl脚本过滤vcf文件
 		./pep.sh
 		awk 'NR%2==O'
 		
-利用mhcnuggets预测IC50值
-
+STEP⑨：利用mhcnuggets预测IC50值
+---
 	输入： ../RP/to/pep_file/sample.pep ()
 	输出： ../RP/to/predict_file/sample.csv ()
 
 	mhcnuggets-2.0/mhcnuggets/src/predict.py
 	
-	交互窗口命令[网址] https://github.com/KarchinLab/mhcnuggets-2.0/blob/master/user_guide.ipynb
+	交互窗口命令[mhcnuggets] https://github.com/KarchinLab/mhcnuggets-2.0/blob/master/user_guide.ipynb
 
 
 
