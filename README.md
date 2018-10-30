@@ -79,6 +79,7 @@ STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  TCGA.[type].[pr
 	
 	2.	运行gdc_scan.py脚本，其中注意：
 			python gdc_scan.py files download --format MAF --project TCGA-XXXX
+			python gdc_scan.py files download --project TCGA-XXXX --type "Clinical Supplement"
 			2.1. 第9行应改为：URL_BASE="https://api.gdc.cancer.gov/"
 			2.2. 第10行应改为：LEGACY_BASE="https://api.gdc.cancer.gov/legacy/"
 
@@ -146,18 +147,51 @@ STEP⑤:利用ensembl-vep进行注释
 	
 	需要将注释后的vep中normal数据删掉，调用cut.py脚本
 
-STEP⑥:
+STEP⑥:利用filter_vep.pl脚本过滤vcf文件
 ---
+	对于像TCGA-BR-4183-vep.vcf这样的文件，其中第220行H列蛋白质很长，需要额外进行过滤操作
+	运行filter_vep.pl脚本
 	
+	输入：../vep-vcf/type-vep/sample.vcf (vep-vcf/cin-vep/TCGA-BR-4183.vcf)
+	输出：../RP/to/filtered_file/sample.vcf ()
+
+	过滤命令
+		./filter_vep \
+		-i <input_file> \
+		-o <output_file> \
+		-filter "Feature != ENST00000589042"
 
 
+运行pVACseq得到fasta文件
+	
+	移除正常样本数据并过滤之后的vcf文件与pVACseq兼容，运行pVACseq得到相应长度的多肽链
+	
+	输入：../RP/to/filtered/sample.vcf ()
+	输出：../RP/to/output/fasta_file/sample.fa ()
+	
+	pVACseq命令
+		pvacseq generate_protein_fasta [-h] [-d DOWNSTREAM_SEQUENCE_LENGTH]
+						<input_file> <peptide_sequence_length>
+						<output_file>
+运行pep.sh脚本抽取偶数行多肽
 
+	对于得到的fasta文件，我们只需要偶数行的多肽
+	
+	输入：../RP/to/fasta_file/sample.fa ()
+	输出：../RP/to/pep_file/sample.pep ()
+	
+	pep命令
+		./pep.sh
+		awk 'NR%2==O'
+		
+利用mhcnuggets预测IC50值
 
+	输入： ../RP/to/pep_file/sample.pep ()
+	输出： ../RP/to/predict_file/sample.csv ()
 
-
-
-
-
+	mhcnuggets-2.0/mhcnuggets/src/predict.py
+	
+	交互窗口命令[网址] https://github.com/KarchinLab/mhcnuggets-2.0/blob/master/user_guide.ipynb
 
 
 
