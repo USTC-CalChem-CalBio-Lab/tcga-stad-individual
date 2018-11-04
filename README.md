@@ -83,8 +83,8 @@ STEP①:利用gdc-scan从gdc-portal提取somatic mutation数据  TCGA.[type].[pr
 			2.1. 第9行应改为：URL_BASE="https://api.gdc.cancer.gov/"
 			2.2. 第10行应改为：LEGACY_BASE="https://api.gdc.cancer.gov/legacy/"
 
-	3.	运行结束后得到压缩包，选择其中 TCGA.STAD.mutect.*.maf 进行解压
-		即 tar zxvf TCGA.STAD.mutect.*.maf
+	3.	运行结束后得到压缩包，选择其中 TCGA.STAD.mutect.*.maf.gz 进行解压
+		即 gzip -d TCGA.STAD.mutect.*.maf.gz
 	4.	移动该maf文件至创建的工作目录中，并重命名为mutect.maf
 	5.	mutect.maf文件的前五行需要删除，同时由于染色体表示方式与fasta文件不符，需要删除各条目对应的”chr“,故共有两步操作:
 			sed -i '1,5d' mutect.maf //删去前5行
