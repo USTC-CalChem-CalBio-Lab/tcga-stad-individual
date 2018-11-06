@@ -12,7 +12,7 @@ import sys
 
 tumor_list = sys.argv[1:]
 
-for tumor in range(len(tumor_list)):
+for tumor in tumor_list:
 	
 	tumor_abbr = tumor[-4:].lower()
 	folder_in = "../{}/{}-pre".format(tumor.upper(), tumor_abbr)

@@ -6,6 +6,10 @@ Created on Mon Sep  3 14:50:59 2018
 @author: frank-lsy
 """
 
+# Purpose: choose the IC50 that smaller than 500nM
+# Starting: src/ directory
+# Usage: python3 get_real_pep.py type1 type2 type3 etc.
+
 import sh
 import os
 import sys
@@ -14,7 +18,7 @@ import function
 
 tumor_list = sys.argv[1:]
 
-for tumor in range(len(tumor_list)):
+for tumor in tumor_list:
     
     tumor_abbr = tumor[-4:].lower()
     folder_in = "../{}/{}-real-pep".format(tumor.upper(), tumor_abbr)

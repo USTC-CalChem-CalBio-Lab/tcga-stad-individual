@@ -17,11 +17,11 @@ function filter ()
    echo `basename $file`
    /home/huce/tcga/ensembl-vep/./filter_vep \
    -i $1`basename $file` \
-	-o ../ad-filter/`basename $file`\
+	-o ../TCGA-LUSC/lusc-filter/`basename $file`\
 	-filter "Feature != ENST00000589042"
    fi
   done
 }
 #函数定义结束，这里用来运行函数
-folder="../ad-vep-vcf/"
+folder="../TCGA-LUSC/lusc-cut/"
 filter $folder

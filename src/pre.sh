@@ -15,8 +15,8 @@ function pre ()
       #echo $1"/"$file
 #读取该文件的文件名，basename是提取文件名的关键字
   	#echo `basename $file`
-  	cd ../pre/
-  	mkdir -pv ../$3/`basename $file`/$4
+  	cd ../TCGA-LUSC/pre/
+  	mkdir -pv ../TCGA-LUSC/$3/`basename $file`/$4
   	for line in `cat $2`
   	do
   		echo $line
@@ -24,25 +24,25 @@ function pre ()
   		-c I \
   		-p $1`basename $file` \
   		-a $line \
-  		-o "../$3/`basename $file`/$4/$line.csv"
+  		-o "../TCGA-LUSC/$3/`basename $file`/$4/$line.csv"
   	done
    fi
   done
 }
 
-folder="../ad-pep/"
+folder="../TCGA-LUSC/lusc-pep/"
 hla="../dataset/HLA-A.csv"
-stad="ad-pre"
+stad="lusc-pre"
 type="A"
 pre $folder $hla $stad $type
-folder="../ad-pep/"
+folder="../TCGA-LUSC/lusc-pep/"
 hla="../dataset/HLA-B.csv"
-stad="ad-pre"
+stad="lusc-pre"
 type="B" 
 pre $folder $hla $stad $type
-folder="../ad-pep/"
+folder="../TCGA-LUSC/lusc-pep/"
 hla="../dataset/HLA-C.csv" 
-stad="ad-pre"
+stad="lusc-pre"
 type="C"
 pre $folder $hla $stad $type
 

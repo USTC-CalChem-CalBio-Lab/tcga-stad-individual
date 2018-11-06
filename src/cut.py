@@ -16,10 +16,10 @@ import sys
 
 tumor_list = sys.argv[1:]
 
-for tumor in range(len(tumor_list)):
+for tumor in tumor_list:
 	
 	tumor_abbr = tumor[-4:].lower()
-	input_dir = "../{}/{}-filter/".format(tumor.upper(), tumor_abbr)
+	input_dir = "../{}/{}-vep-vcf/".format(tumor.upper(), tumor_abbr)
 	output_dir = "../{}/{}-cut/".format(tumor.upper(), tumor_abbr)
 	sh.mkdir('-pv', output_dir)
 

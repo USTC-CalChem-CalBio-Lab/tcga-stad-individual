@@ -17,10 +17,10 @@ function fasta ()
 #读取该文件的文件名，basename是提取文件名的关键字
 	echo "generate_protein_fasta " `basename $file`
 	pvacseq generate_protein_fasta \
-	$1`basename $file` 9 ../ad-fasta/`basename $file`.fa
+	$1`basename $file` 9 ../TCGA-LUSC/lusc-fasta/`basename $file`.fa
    fi
   done
 }
 #函数定义结束，这里用来运行函数
-folder="../ad-cut/"
+folder="../TCGA-LUSC/lusc-cut/"
 fasta $folder

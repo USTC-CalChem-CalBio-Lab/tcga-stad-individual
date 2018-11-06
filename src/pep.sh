@@ -17,11 +17,11 @@ function pep()
       #echo $1"/"$file
 #读取该文件的文件名，basename是提取文件名的关键字
    echo PEP-ing `basename $file`
-   awk 'NR%2==0' $1`basename $file` >>  ../ad-pep/`basename $file`.pep
+   awk 'NR%2==0' $1`basename $file` >>  ../TCGA-LUSC/lusc-pep/`basename $file`.pep
    fi
   done
 }
 
 #函数定义结束，这里用来运行函数
-folder="../ad-fasta/"
+folder="../TCGA-LUSC/lusc-fasta/"
 pep  $folder 
