@@ -19,7 +19,7 @@ B ensembl-vep
 		cpan (install) DBI
 	
 	B3 DBD::mysql
-		cpan (install) DBD
+		cpan (install) DBD::mysql
 		ps:安装过程中提示缺什么就直接cpan (install) *库名称*
 
 	安装完成依赖软件之后安装ensembl-vep
