@@ -11,7 +11,7 @@ B ensembl-vep
 	B1 mysql
 		sudo apt-get install mysql-server
 		sudo apt install mysql-client
-		sudo apt install libmtsqlclinet-dev
+		sudo apt install libmysqlclient-dev
 		检测：
 		sudo netstat -tap | grep mysql
 
