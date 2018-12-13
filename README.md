@@ -48,11 +48,12 @@ D samtools (maf2vcf会用到)
 ---	
 	先安装依赖软件
 
-	D1 autoheader
-		sudo apt-get install autoheader
+	D1 autoconf
+		sudo apt-get install autoconf
 
 	D2 htslib
 		git clone https://github.com/samtools/htslib.git
+		autoheader
 		autoconf
 		./configure
 		make
