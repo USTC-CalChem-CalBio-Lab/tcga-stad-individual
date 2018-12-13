@@ -2,7 +2,7 @@
 ===
 A MHCnuggets
 ---
-	pip(3/3.5/3.6/3.7) install MHCnuggets
+	pip(3/3.5/3.6/3.7) install mhcnuggets
 
 B ensembl-vep
 ---
@@ -20,7 +20,6 @@ B ensembl-vep
 	
 	B3 DBD::mysql
 		cpan (install) DBD::mysql
-		ps:安装过程中提示缺什么就直接cpan (install) *库名称*
 
 	安装完成依赖软件之后安装ensembl-vep
 	git clone https://github.com/Ensembl/ensembl-vep.git
@@ -28,7 +27,8 @@ B ensembl-vep
 	cd ensembl-vep
 	perl INSTALL.pl
 	
-	ps:	安装时候基本一路选择yes，记得要安装plugins。
+	ps:	
+		安装时候基本一路选择yes，记得要安装plugins。
 		不需要安装fasta，如果根目录剩余空间够大(>10G)可以安装cache，否则手动下载cache。		
 		***安装所有的Plugins!!!*** (即选择0:all)
 		手动下载cache方法：
@@ -37,6 +37,8 @@ B ensembl-vep
 			cd cache
 			curl ftp://ftp.ensembl.org/pub/release-94/variation/VEP/homo_sapiens_vep_94_GRCh38.tar.gz
 			tar zxvf homo_sapiens_vep_94_GRCh38.tar.gz
+		
+		pps:安装过程中提示缺什么就直接cpan (install) *库名称*
 
 C pvactools
 ---
@@ -64,10 +66,12 @@ D samtools (maf2vcf会用到)
 
 	安装完成依赖软件之后安装samtools
 	git clone https://github.com/samtools/samtools.git
-	cd samtools-1.5
+	cd samtools
 	autoheader
 	autoconf -Wno-syntax
-	./configure --with-htslib=/htslib/install/dir
+	./configure --with-htslib=/htslib/install/dir(/usr/local/include/htslib)
+	make
+	make install
 	
 
 
