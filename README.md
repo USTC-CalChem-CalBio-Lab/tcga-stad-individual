@@ -35,7 +35,7 @@ B ensembl-vep
 			在ensembl-vep下
 			mkdir cache
 			cd cache
-			curl ftp://ftp.ensembl.org/pub/release-94/variation/VEP/homo_sapiens_vep_94_GRCh38.tar.gz
+			curl -O ftp://ftp.ensembl.org/pub/release-94/variation/VEP/homo_sapiens_vep_94_GRCh38.tar.gz
 			tar zxvf homo_sapiens_vep_94_GRCh38.tar.gz
 		
 		pps:安装过程中提示缺什么就直接cpan (install) *库名称*
