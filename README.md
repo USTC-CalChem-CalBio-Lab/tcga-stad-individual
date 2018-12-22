@@ -39,12 +39,14 @@ B ensembl-vep
 			tar zxvf homo_sapiens_vep_94_GRCh38.tar.gz
 		
 		pps:安装过程中提示缺什么就直接cpan (install) *库名称*
+			Module::Build
+			Try::Tiny
 
 C pvactools
 ---
 	pip(3/3.5/3.6/3.7) install pvactools
 	下载完成后，找到pvactools文件夹并打开， cd tools/pvacseq/VEP_lugins. 会看到一个Wildtype.pm 将其复制到/root/.vep/Plugins文件夹中。
-		ps:pvactools文件夹通常在python3的默认安装文件夹中。
+		ps:pvactools文件夹通常在python3的默认安装文件夹中。(/usr/local/lib/python3.5/disk-packages/tools)
 
 D samtools (maf2vcf会用到)
 ---	
@@ -53,8 +55,10 @@ D samtools (maf2vcf会用到)
 	D1 autoconf
 		sudo apt-get install autoconf
 
-	D2 htslib
+	D2 htslib	
 		git clone https://github.com/samtools/htslib.git
+		apt-get install libbz2-dev
+		apt-get install liblzma-dev
 		autoheader
 		autoconf
 		./configure
